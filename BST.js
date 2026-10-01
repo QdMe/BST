@@ -33,14 +33,6 @@ class Tree {
       else currentNode = currentNode.right;
     }
     return false;
-    //   if (currentNode == null) return false;
-    //   if (value == currentNode.data) return true;
-    //   if (value < currentNode.data) {
-    //     this.includes(value, currentNode.left);
-    //   } else {
-    //     this.includes(value, currentNode.right);
-    //   }
-    // }
   }
 }
 
