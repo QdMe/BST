@@ -34,6 +34,29 @@ class Tree {
     }
     return false;
   }
+
+  //  inserts(value) function
+  insert(value) {
+    let currentNode = this.root;
+    while (currentNode.data != value) {
+      if (value < currentNode.data) {
+        if (currentNode.left == null) {
+          let newNode = new Node(value);
+          currentNode.setLeft(newNode);
+          return;
+        } else {
+          currentNode = currentNode.left;
+        }
+      } else if (currentNode.right == null) {
+        let newNode = new Node(value);
+        currentNode.setRight(newNode);
+        return;
+      } else {
+        currentNode = currentNode.right;
+      }
+    }
+    return;
+  }
 }
 
 // Function for removing duplicate values
@@ -59,8 +82,10 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // Quick testing section
-let tree = new Tree([1, 2, 3, 4]);
-console.log(tree.includes(6));
+let tree = new Tree([1, 3, 5, 7]);
+tree.insert(6);
 // console.log(prettyPrint(tree.root));
+// console.log(tree.root);
+console.log(prettyPrint(tree.root));
 
 export { Tree };

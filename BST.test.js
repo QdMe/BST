@@ -55,17 +55,82 @@ describe("BST class", () => {
       expect(tree.root).toEqual(null);
     });
   });
-  describe("Manipulation functions", () => {
+  describe("Manipulation", () => {
+    let tree = new Tree([1, 3, 5, 7]);
     describe("includes(value) function", () => {
-      let tree = new Tree([1, 2, 3, 4, 5]);
       test("Should return true for a given value that exists in the tree", () => {
         expect(tree.includes(1)).toBe(true);
       });
       test("Should return true for a given value that exists in the tree", () => {
-        expect(tree.includes(2)).toBe(true);
+        expect(tree.includes(7)).toBe(true);
       });
       test("Should return false for a given value that does not exist in the tree", () => {
         expect(tree.includes(6)).toBe(false);
+      });
+    });
+    describe("insert(value)", () => {
+      let tree = new Tree([1, 3, 5, 7]);
+      test("Should insert a new node with the given value in the tree in the correct place", () => {
+        tree.insert(6);
+        expect(tree.root).toEqual({
+          data: 3,
+          left: {
+            data: 1,
+            left: null,
+            right: null,
+          },
+          right: {
+            data: 5,
+            left: null,
+            right: {
+              data: 7,
+              left: { data: 6, left: null, right: null },
+              right: null,
+            },
+          },
+        });
+      });
+      test("Should insert a new node with the given value in the tree in the correct place", () => {
+        let tree = new Tree([1, 3, 5, 7]);
+        tree.insert(2);
+        expect(tree.root).toEqual({
+          data: 3,
+          left: {
+            data: 1,
+            left: null,
+            right: { data: 2, left: null, right: null },
+          },
+          right: {
+            data: 5,
+            left: null,
+            right: {
+              data: 7,
+              left: null,
+              right: null,
+            },
+          },
+        });
+      });
+      test("Should do nothing when inserting a value that already exists in the tree", () => {
+        let tree = new Tree([1, 3, 5, 7]);
+        tree.insert(5);
+        expect(tree.root).toEqual({
+          data: 3,
+          left: {
+            data: 1,
+            left: null,
+            right: null,
+          },
+          right: {
+            data: 5,
+            left: null,
+            right: {
+              data: 7,
+              left: null,
+              right: null,
+            },
+          },
+        });
       });
     });
   });
