@@ -26,39 +26,95 @@ class Tree {
   }
   // includes(value) function
   includes(value) {
-    let currentNode = this.root;
-    while (currentNode != null) {
-      if (value == currentNode.data) return true;
-      if (value < currentNode.data) currentNode = currentNode.left;
-      else currentNode = currentNode.right;
+    let curr = this.root;
+    while (curr != null) {
+      if (value == curr.data) return true;
+      if (value < curr.data) curr = curr.left;
+      else curr = curr.right;
     }
     return false;
   }
 
   //  inserts(value) function
   insert(value) {
-    let currentNode = this.root;
-    while (currentNode.data != value) {
-      if (value < currentNode.data) {
-        if (currentNode.left == null) {
+    let curr = this.root;
+    while (curr.data != value) {
+      if (value < curr.data) {
+        if (curr.left == null) {
           let newNode = new Node(value);
-          currentNode.setLeft(newNode);
+          curr.setLeft(newNode);
           return;
         } else {
-          currentNode = currentNode.left;
+          curr = curr.left;
         }
-      } else if (currentNode.right == null) {
+      } else if (curr.right == null) {
         let newNode = new Node(value);
-        currentNode.setRight(newNode);
+        curr.setRight(newNode);
         return;
       } else {
-        currentNode = currentNode.right;
+        curr = curr.right;
       }
     }
     return;
   }
-}
+  // delete(value) function
+  delete(value) {
+    let parent = null;
+    let curr = this.root;
 
+    while (curr != null) {
+      if (curr.data == value) {
+        // #Case 1: Target has no children
+        // If the target was a single node tree
+        if (parent == null && curr.right == null && curr.left == null) {
+          this.root = null;
+          return;
+        }
+        // Otherwise
+        if (curr.left == null && curr.right == null) {
+          if (value > parent.data) parent.right = null;
+          else parent.left = null;
+          return;
+        }
+        // #Case 2: Target has one child
+        else if (curr.left == null || curr.right == null) {
+          if (curr.right == null && value < parent.data) {
+            parent.left = curr.left;
+          } else if (curr.left == null && value < parent.data) {
+            parent.left = curr.right;
+          } else if (curr.right == null && value > parent.data) {
+            parent.right = curr.left;
+          } else parent.right = curr.right;
+          return;
+        }
+
+        // #Case 3: Target has two children
+        if (curr.right && curr.left) {
+          let temp = getInorder(curr).data;
+          let inOrder = getInorder(curr);
+          inOrder.data = curr.data;
+          curr.data = temp;
+          this.delete(inOrder.data);
+          return;
+        }
+      } // Loop control
+      if (value < curr.data) {
+        parent = curr;
+        curr = curr.left;
+      } else {
+        parent = curr;
+        curr = curr.right;
+      }
+    }
+  }
+}
+function getInorder(node) {
+  let curr = node.right;
+  while (curr.left != null) {
+    curr = curr.left;
+  }
+  return curr;
+}
 // Function for removing duplicate values
 const removeDuplicates = (array) => {
   let newArray = [];
@@ -82,8 +138,10 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // Quick testing section
-let tree = new Tree([1, 3, 5, 7]);
-tree.insert(6);
+let tree = new Tree([1, 2, 3, 4, 5, 6]);
+// tree.delete(2);
+tree.delete(5);
+
 // console.log(prettyPrint(tree.root));
 // console.log(tree.root);
 console.log(prettyPrint(tree.root));
