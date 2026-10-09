@@ -58,10 +58,8 @@ class Tree {
     return;
   }
   // delete(value) function
-  delete(value) {
-    let parent = null;
-    let curr = this.root;
-
+  delete(value, parent = null, root = this.root) {
+    let curr = root;
     while (curr != null) {
       if (curr.data == value) {
         // #Case 1: Target has no children
@@ -72,7 +70,7 @@ class Tree {
         }
         // Otherwise
         if (curr.left == null && curr.right == null) {
-          if (value > parent.data) parent.right = null;
+          if (value >= parent.data) parent.right = null;
           else parent.left = null;
           return;
         }
@@ -90,14 +88,15 @@ class Tree {
 
         // #Case 3: Target has two children
         if (curr.right && curr.left) {
-          let temp = getInorder(curr).data;
-          let inOrder = getInorder(curr);
-          inOrder.data = curr.data;
-          curr.data = temp;
-          this.delete(inOrder.data);
+          let inOrder = getInorder(curr).data;
+          // let inOrder = getInorder(this.root);
+          // inOrder.data = curr.data;
+          curr.data = inOrder;
+          this.delete(inOrder, curr, curr.right);
           return;
         }
-      } // Loop control
+      }
+      // Loop control
       if (value < curr.data) {
         parent = curr;
         curr = curr.left;
@@ -138,12 +137,12 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // Quick testing section
-let tree = new Tree([1, 2, 3, 4, 5, 6]);
+// let tree = new Tree([2, 3, 4, 5, 6, 7, 8]);
 // tree.delete(2);
-tree.delete(5);
+// tree.delete(5);
 
 // console.log(prettyPrint(tree.root));
 // console.log(tree.root);
-console.log(prettyPrint(tree.root));
+// console.log(prettyPrint(tree.root));
 
 export { Tree };

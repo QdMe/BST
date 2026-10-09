@@ -133,7 +133,7 @@ describe("BST class", () => {
         });
       });
     });
-    describe.only("delete(value)", () => {
+    describe("delete(value)", () => {
       test("Should delete a left leaf node with the given value from the tree", () => {
         let tree = new Tree([1, 3, 5, 7]);
         tree.delete(1);
@@ -190,7 +190,7 @@ describe("BST class", () => {
           },
         });
       });
-      test("Should delete a node that has a two children", () => {
+      test("Should delete a node that has two children", () => {
         let tree = new Tree([1, 2, 3, 4, 5, 6]);
         tree.delete(5);
         expect(tree.root).toEqual({
@@ -207,7 +207,24 @@ describe("BST class", () => {
           },
         });
       });
-      test("Should delete the root node", () => {
+      test("Should delete a root node with two child nodes", () => {
+        let tree = new Tree([2, 3, 4, 5, 6, 7, 8]);
+        tree.delete(5);
+        expect(tree.root).toEqual({
+          data: 6,
+          left: {
+            data: 3,
+            left: { data: 2, left: null, right: null },
+            right: { data: 4, left: null, right: null },
+          },
+          right: {
+            data: 7,
+            left: null,
+            right: { data: 8, left: null, right: null },
+          },
+        });
+      });
+      test("Should delete a root node with two child nodes", () => {
         let tree = new Tree([1, 2, 3, 4, 5, 6]);
         tree.delete(3);
         expect(tree.root).toEqual({
