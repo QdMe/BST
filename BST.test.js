@@ -242,5 +242,31 @@ describe("BST class", () => {
         });
       });
     });
+    describe.only("levelOrderForEachIteration(callback)", () => {
+      test("Should call the callback passed on every node in level order manner", () => {
+        let sum = 0;
+        function calcSum(num) {
+          sum += num;
+        }
+        let tree = new Tree([1, 2, 3]);
+        tree.levelOrderForEachIteration(calcSum);
+        expect(sum).toBe(6);
+      });
+      test("Should call the callback passed on every node in level order manner", () => {
+        let levelOrder = [];
+        function printInLevelOrder(item) {
+          levelOrder.push(item);
+        }
+        let tree = new Tree([1, 2, 3]);
+        tree.levelOrderForEachIteration(printInLevelOrder);
+        expect(levelOrder).toStrictEqual([2, 1, 3]);
+      });
+      test("Should throw an Error if no callback is provided", () => {
+        let tree = new Tree([1, 2, 3]);
+        expect(() => {
+          tree.levelOrderForEachIteration();
+        }).toThrow();
+      });
+    });
   });
 });

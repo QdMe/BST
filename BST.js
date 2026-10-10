@@ -1,3 +1,4 @@
+import { Queue } from "./Queue.js";
 class Node {
   constructor(data) {
     this.data = data;
@@ -106,6 +107,21 @@ class Tree {
       }
     }
   }
+
+  // levelOrderForEach(callback)
+  levelOrderForEachIteration(callback) {
+    if (typeof callback !== "function")
+      throw new Error("Parameter must be a callback!");
+    let Q = new Queue();
+    Q.push(this.root);
+    while (Q.items.length != 0) {
+      let curr = Q.front();
+      callback(curr.data);
+      if (curr.left != null) Q.push(curr.left);
+      if (curr.right != null) Q.push(curr.right);
+      Q.pop();
+    }
+  }
 }
 function getInorder(node) {
   let curr = node.right;
@@ -137,12 +153,17 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // Quick testing section
-// let tree = new Tree([2, 3, 4, 5, 6, 7, 8]);
-// tree.delete(2);
-// tree.delete(5);
-
-// console.log(prettyPrint(tree.root));
-// console.log(tree.root);
-// console.log(prettyPrint(tree.root));
+// let tree = new Tree([1, 2, 3]);
+// function printNum(num) {
+//   console.log(num);
+// }
+// let sum = 0;
+// function calcSum(num) {
+//   sum += num;
+// }
+// let levelOrder = [];
+// function printInLevelOrder(item) {
+//   levelOrder.push(item);
+// }
 
 export { Tree };
