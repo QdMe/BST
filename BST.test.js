@@ -242,7 +242,7 @@ describe("BST class", () => {
         });
       });
     });
-    describe.only("levelOrderForEachIteration(callback)", () => {
+    describe("levelOrderForEachIteration(callback)", () => {
       test("Should call the callback passed on every node in level order manner", () => {
         let sum = 0;
         function calcSum(num) {
@@ -251,6 +251,15 @@ describe("BST class", () => {
         let tree = new Tree([1, 2, 3]);
         tree.levelOrderForEachIteration(calcSum);
         expect(sum).toBe(6);
+      });
+      test("Should call the callback passed on every node in level order manner", () => {
+        let sum = 0;
+        function calcSum(num) {
+          sum += num;
+        }
+        let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        tree.levelOrderForEachIteration(calcSum);
+        expect(sum).toBe(55);
       });
       test("Should call the callback passed on every node in level order manner", () => {
         let levelOrder = [];
@@ -265,6 +274,42 @@ describe("BST class", () => {
         let tree = new Tree([1, 2, 3]);
         expect(() => {
           tree.levelOrderForEachIteration();
+        }).toThrow();
+      });
+    });
+
+    describe("levelOrderForEachRec(callback)", () => {
+      test("Should call the callback passed on every node in level order manner", () => {
+        let sum = 0;
+        function calcSum(num) {
+          sum += num;
+        }
+        let tree = new Tree([1, 2, 3]);
+        tree.levelOrderForEachIteration(calcSum);
+        expect(sum).toBe(6);
+      });
+      test("Should call the callback passed on every node in level order manner", () => {
+        let sum = 0;
+        function calcSum(num) {
+          sum += num;
+        }
+        let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        tree.levelOrderForEachRec(calcSum);
+        expect(sum).toBe(55);
+      });
+      test("Should call the callback passed on every node in level order manner", () => {
+        let levelOrder = [];
+        function printInLevelOrder(item) {
+          levelOrder.push(item);
+        }
+        let tree = new Tree([1, 2, 3]);
+        tree.levelOrderForEachRec(printInLevelOrder);
+        expect(levelOrder).toStrictEqual([2, 1, 3]);
+      });
+      test("Should throw an Error if no callback is provided", () => {
+        let tree = new Tree([1, 2, 3]);
+        expect(() => {
+          tree.levelOrderForEachRec();
         }).toThrow();
       });
     });

@@ -114,13 +114,37 @@ class Tree {
       throw new Error("Parameter must be a callback!");
     let Q = new Queue();
     Q.push(this.root);
-    while (Q.items.length != 0) {
+    while (Q.items.length != 0 && Q.front() != null) {
       let curr = Q.front();
       callback(curr.data);
       if (curr.left != null) Q.push(curr.left);
       if (curr.right != null) Q.push(curr.right);
       Q.pop();
     }
+  }
+  levelOrderRec(root, level, resArr) {
+    // Base case
+    if (root === null) return;
+
+    // Add a new level if needed (Only if the number of levels is lower or equal than the current level)
+    if (resArr.length <= level) resArr.push([]);
+
+    // Push current's root's data into it's corresponding level
+    resArr[level].push(root.data);
+
+    // Do the same with children
+    this.levelOrderRec(root.left, level + 1, resArr);
+    this.levelOrderRec(root.right, level + 1, resArr);
+  }
+  levelOrderForEachRec(callback) {
+    if (typeof callback !== "function")
+      throw new Error("Parameter must be a callback!");
+    let level = 0;
+    let resArr = [];
+    this.levelOrderRec(this.root, level, resArr);
+    resArr.forEach((level) => {
+      level.forEach((item) => callback(item));
+    });
   }
 }
 function getInorder(node) {
@@ -153,17 +177,15 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // Quick testing section
-// let tree = new Tree([1, 2, 3]);
-// function printNum(num) {
-//   console.log(num);
-// }
-// let sum = 0;
-// function calcSum(num) {
-//   sum += num;
-// }
-// let levelOrder = [];
-// function printInLevelOrder(item) {
-//   levelOrder.push(item);
-// }
+// let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+let tree = new Tree([1, 2, 3]);
 
-export { Tree };
+let levelOrder = [];
+function printInLevelOrder(item) {
+  levelOrder.push(item);
+}
+// [3,1,4,2,5]
+// tree.levelOrderForEachRec(printInLevelOrder);
+// console.log(levelOrder);
+// console.log(prettyPrint(tree.root));
+export { Node, Tree };
