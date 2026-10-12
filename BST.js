@@ -146,6 +146,31 @@ class Tree {
       level.forEach((item) => callback(item));
     });
   }
+  inOrderForEach(callback, root = this.root) {
+    if (typeof callback !== "function")
+      throw new Error("Parameter must be a callback!");
+    if (root === null) return;
+    this.inOrderForEach(callback, root.left);
+    callback(root.data);
+
+    this.inOrderForEach(callback, root.right);
+  }
+  preOrderForEach(callback, root = this.root) {
+    if (typeof callback !== "function")
+      throw new Error("Parameter must be a callback!");
+    if (root === null) return;
+    callback(root.data);
+    this.preOrderForEach(callback, root.left);
+    this.preOrderForEach(callback, root.right);
+  }
+  postOrderForEach(callback, root = this.root) {
+    if (typeof callback !== "function")
+      throw new Error("Parameter must be a callback!");
+    if (root === null) return;
+    this.postOrderForEach(callback, root.left);
+    this.postOrderForEach(callback, root.right);
+    callback(root.data);
+  }
 }
 function getInorder(node) {
   let curr = node.right;
@@ -177,15 +202,16 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // Quick testing section
-// let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
-let tree = new Tree([1, 2, 3]);
+let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+// let tree = new Tree([1, 2, 3,4,5]);
 
-let levelOrder = [];
-function printInLevelOrder(item) {
-  levelOrder.push(item);
+let arr = [];
+function print(item) {
+  arr.push(item);
 }
-// [3,1,4,2,5]
-// tree.levelOrderForEachRec(printInLevelOrder);
-// console.log(levelOrder);
-// console.log(prettyPrint(tree.root));
+
+tree.postOrderForEach(print);
+console.log(arr);
+console.log(prettyPrint(tree.root));
+
 export { Node, Tree };

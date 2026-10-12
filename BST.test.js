@@ -274,7 +274,7 @@ describe("BST class", () => {
         let tree = new Tree([1, 2, 3]);
         expect(() => {
           tree.levelOrderForEachIteration();
-        }).toThrow();
+        }).toThrow(new Error("Parameter must be a callback!"));
       });
     });
 
@@ -310,6 +310,111 @@ describe("BST class", () => {
         let tree = new Tree([1, 2, 3]);
         expect(() => {
           tree.levelOrderForEachRec();
+        }).toThrow();
+      });
+    });
+    describe("inOrderForEach(callback)", () => {
+      test("Should call the callback passed on every node in in-order manner", () => {
+        let sum = 0;
+        function calcSum(num) {
+          sum += num;
+        }
+        let tree = new Tree([1, 2, 3]);
+        tree.inOrderForEach(calcSum);
+        expect(sum).toBe(6);
+      });
+      test("Should call the callback passed on every node in in-order manner", () => {
+        let sum = 0;
+        function calcSum(num) {
+          sum += num;
+        }
+        let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        tree.inOrderForEach(calcSum);
+        expect(sum).toBe(55);
+      });
+      test("Should call the callback passed on every node in in-order manner", () => {
+        let preOrder = [];
+        function printInPreOrder(item) {
+          preOrder.push(item);
+        }
+        let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        tree.inOrderForEach(printInPreOrder);
+        expect(preOrder).toStrictEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+      });
+      test("Should throw an Error if no callback is provided", () => {
+        let tree = new Tree([1, 2, 3]);
+        expect(() => {
+          tree.inOrderForEach();
+        }).toThrow(new Error("Parameter must be a callback!"));
+      });
+    });
+    describe("preOrderForEach(callback)", () => {
+      test("Should call the callback passed on every node pre-order manner", () => {
+        let sum = 0;
+        function calcSum(num) {
+          sum += num;
+        }
+        let tree = new Tree([1, 2, 3]);
+        tree.preOrderForEach(calcSum);
+        expect(sum).toBe(6);
+      });
+      test("Should call the callback passed on every node in pre-order manner", () => {
+        let sum = 0;
+        function calcSum(num) {
+          sum += num;
+        }
+        let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        tree.preOrderForEach(calcSum);
+        expect(sum).toBe(55);
+      });
+      test("Should call the callback passed on every node in pre-order manner", () => {
+        let preOrder = [];
+        function printInPreOrder(item) {
+          preOrder.push(item);
+        }
+        let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        tree.preOrderForEach(printInPreOrder);
+        expect(preOrder).toStrictEqual([5, 2, 1, 3, 4, 8, 6, 7, 9, 10]);
+      });
+      test("Should throw an Error if no callback is provided", () => {
+        let tree = new Tree([1, 2, 3]);
+        expect(() => {
+          tree.preOrderForEach();
+        }).toThrow();
+      });
+    });
+    describe("postOrderForEach(callback)", () => {
+      test("Should call the callback passed on every node post-order manner", () => {
+        let sum = 0;
+        function calcSum(num) {
+          sum += num;
+        }
+        let tree = new Tree([1, 2, 3]);
+        tree.postOrderForEach(calcSum);
+        expect(sum).toBe(6);
+      });
+      test("Should call the callback passed on every node in post-order manner", () => {
+        let sum = 0;
+        function calcSum(num) {
+          sum += num;
+        }
+        let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        tree.postOrderForEach(calcSum);
+        expect(sum).toBe(55);
+      });
+      test("Should call the callback passed on every node in post-order manner", () => {
+        let postOrder = [];
+        function printPostOrder(item) {
+          postOrder.push(item);
+        }
+        let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        tree.postOrderForEach(printPostOrder);
+        expect(postOrder).toStrictEqual([1, 4, 3, 2, 7, 6, 10, 9, 8, 5]);
+      });
+      test("Should throw an Error if no callback is provided", () => {
+        let tree = new Tree([1, 2, 3]);
+        expect(() => {
+          tree.postOrderForEach();
         }).toThrow();
       });
     });
