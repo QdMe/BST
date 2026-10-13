@@ -421,7 +421,7 @@ describe("BST class", () => {
         }).toThrow();
       });
     });
-    describe.only("height(value)", () => {
+    describe("height(value)", () => {
       test("Should return the height of the given node value in the tree", () => {
         let tree = new Tree([1, 2, 3]);
         expect(tree.height(2)).toBe(1);
@@ -441,6 +441,28 @@ describe("BST class", () => {
       test("Should return undefined for a value that is not in the tree", () => {
         let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
         expect(tree.height(11)).toBe(undefined);
+      });
+    });
+    describe.only("depth(value)", () => {
+      test("Should return 0 for the depth when given the root node", () => {
+        let tree = new Tree([1, 2, 3]);
+        expect(tree.depth(2)).toBe(0);
+      });
+      test("Should return the number of edges from the root to the given node value", () => {
+        let tree = new Tree([1, 2, 3]);
+        expect(tree.depth(3)).toBe(1);
+      });
+      test("Should return the number of edges from the root to the given node value", () => {
+        let tree = new Tree([1, 2, 3, 4, 5, 6, 7]);
+        expect(tree.depth(5)).toBe(2);
+      });
+      test("Should return the number of edges from the root to the given node value", () => {
+        let tree = new Tree([1, 2, 3, 4, 5, 6, 7]);
+        expect(tree.depth(5)).toBe(2);
+      });
+      test("Should return undefined for a non-existing value", () => {
+        let tree = new Tree([1, 2, 3, 4, 5, 6, 7]);
+        expect(tree.depth(8)).toBe(undefined);
       });
     });
   });

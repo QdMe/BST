@@ -200,6 +200,17 @@ class Tree {
     if (node === null) return undefined;
     else return this.#height(node);
   }
+  depth(value) {
+    let curr = this.root;
+    let depth = 0;
+    while (curr !== null) {
+      if (curr.data === value) return depth;
+      if (value < curr.data) {
+        curr = curr.left;
+      } else curr = curr.right;
+      depth++;
+    }
+  }
 }
 function getInorder(node) {
   let curr = node.right;
@@ -234,6 +245,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 // let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 // let tree = new Tree([1, 2, 3, 4, 5]);
 // let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8]);
-// let tree = new Tree([1, 2, 3, 4]);
+let tree = new Tree([1, 2, 3]);
+console.log(tree.depth(4));
 
 export { Node, Tree };
