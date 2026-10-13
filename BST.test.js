@@ -56,13 +56,16 @@ describe("BST class", () => {
     });
   });
   describe("Manipulation", () => {
-    let tree = new Tree([1, 3, 5, 7]);
+    let tree = new Tree([1, 3, 5, 7, 8, 10, 13, 55]);
     describe("includes(value) function", () => {
       test("Should return true for a given value that exists in the tree", () => {
         expect(tree.includes(1)).toBe(true);
       });
       test("Should return true for a given value that exists in the tree", () => {
         expect(tree.includes(7)).toBe(true);
+      });
+      test("Should return false for a given value that does not exist in the tree", () => {
+        expect(tree.includes(55)).toBe(true);
       });
       test("Should return false for a given value that does not exist in the tree", () => {
         expect(tree.includes(6)).toBe(false);
@@ -416,6 +419,28 @@ describe("BST class", () => {
         expect(() => {
           tree.postOrderForEach();
         }).toThrow();
+      });
+    });
+    describe.only("height(value)", () => {
+      test("Should return the height of the given node value in the tree", () => {
+        let tree = new Tree([1, 2, 3]);
+        expect(tree.height(2)).toBe(1);
+      });
+      test("Should return the height of the given node value in the tree", () => {
+        let tree = new Tree([1, 2, 3]);
+        expect(tree.height(3)).toBe(0);
+      });
+      test("Should return the height of the given node value in the tree", () => {
+        let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        expect(tree.height(5)).toBe(3);
+      });
+      test("Should return the height of the given node value in the tree", () => {
+        let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        expect(tree.height(8)).toBe(2);
+      });
+      test("Should return undefined for a value that is not in the tree", () => {
+        let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        expect(tree.height(11)).toBe(undefined);
       });
     });
   });

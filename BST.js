@@ -171,6 +171,35 @@ class Tree {
     this.postOrderForEach(callback, root.right);
     callback(root.data);
   }
+  #findNode(value) {
+    let curr = this.root;
+    while (curr != null) {
+      if (curr.data == value) return curr;
+      if (value < curr.data) curr = curr.left;
+      else curr = curr.right;
+    }
+    return null;
+  }
+  #height(root, steps = 0) {
+    //Base case:
+    if (root == null || (root.left == null && root.right == null)) return steps;
+
+    // Recursively find hight of each child
+    let leftPath = this.#height(root.left, steps + 1);
+    let rightPath = this.#height(root.right, steps + 1);
+
+    // Return the longer path
+    if (leftPath >= rightPath) return leftPath;
+    return rightPath;
+  }
+  height(value) {
+    // Find the node of the value in the tree
+    let node = this.#findNode(value);
+
+    // Return the height of the node
+    if (node === null) return undefined;
+    else return this.#height(node);
+  }
 }
 function getInorder(node) {
   let curr = node.right;
@@ -202,16 +231,9 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // Quick testing section
-let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-// let tree = new Tree([1, 2, 3,4,5]);
-
-let arr = [];
-function print(item) {
-  arr.push(item);
-}
-
-tree.postOrderForEach(print);
-console.log(arr);
-console.log(prettyPrint(tree.root));
+// let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+// let tree = new Tree([1, 2, 3, 4, 5]);
+// let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8]);
+// let tree = new Tree([1, 2, 3, 4]);
 
 export { Node, Tree };
