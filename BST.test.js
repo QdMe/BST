@@ -336,13 +336,13 @@ describe("BST class", () => {
         expect(sum).toBe(55);
       });
       test("Should call the callback passed on every node in in-order manner", () => {
-        let preOrder = [];
+        let inOrder = [];
         function printInPreOrder(item) {
-          preOrder.push(item);
+          inOrder.push(item);
         }
         let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
         tree.inOrderForEach(printInPreOrder);
-        expect(preOrder).toStrictEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        expect(inOrder).toStrictEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
       });
       test("Should throw an Error if no callback is provided", () => {
         let tree = new Tree([1, 2, 3]);
@@ -465,27 +465,69 @@ describe("BST class", () => {
         expect(tree.depth(8)).toBe(undefined);
       });
     });
-  });
-  describe.only("isBalanced()", () => {
-    test("Should return true for a single node tree", () => {
-      let tree = new Tree([1]);
-      expect(tree.isBalanced()).toBe(true);
+    describe("isBalanced()", () => {
+      test("Should return true for a single node tree", () => {
+        let tree = new Tree([1]);
+        expect(tree.isBalanced()).toBe(true);
+      });
+      test("Should return true for a single node tree", () => {
+        let tree = new Tree([1, 2]);
+        expect(tree.isBalanced()).toBe(true);
+      });
+      test("Should return false for an unbalanced tree", () => {
+        let tree = new Tree([1, 2, 3]);
+        tree.insert(11);
+        tree.insert(12);
+        expect(tree.isBalanced()).toBe(false);
+      });
+      test("Should return false for an unbalanced tree", () => {
+        let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        tree.delete(10);
+        tree.delete(8);
+        expect(tree.isBalanced()).toBe(false);
+      });
+      test("Should return false for an unbalanced tree", () => {
+        let tree = new Tree([1]);
+        tree.insert(2);
+        tree.insert(3);
+        tree.insert(4);
+        tree.insert(5);
+        expect(tree.isBalanced()).toBe(false);
+      });
     });
-    test("Should return true for a single node tree", () => {
-      let tree = new Tree([1, 2]);
-      expect(tree.isBalanced()).toBe(true);
-    });
-    test("Should false for an unbalanced tree", () => {
-      let tree = new Tree([1, 2, 3]);
-      tree.insert(11);
-      tree.insert(12);
-      expect(tree.isBalanced()).toBe(false);
-    });
-    test("Should false for an unbalanced tree", () => {
-      let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-      tree.delete(10);
-      tree.delete(8);
-      expect(tree.isBalanced()).toBe(false);
+    describe.only("reBalance()", () => {
+      test("Should return balance a given unbalanced tree", () => {
+        let tree = new Tree([1]);
+        tree.insert(2);
+        tree.insert(3);
+        tree.insert(4);
+        tree.reBalance();
+        expect(tree.root).toEqual({
+          data: 2,
+          left: {
+            data: 1,
+            left: null,
+            right: null,
+          },
+          right: {
+            data: 3,
+            left: null,
+            right: {
+              data: 4,
+              left: null,
+              right: null,
+            },
+          },
+        });
+      });
+      test("Should return a string message that says `The tree is already balanced` if a balanced tree provided", () => {
+        let tree = new Tree([1]);
+        tree.insert(2);
+        tree.insert(3);
+        tree.insert(4);
+        tree.reBalance();
+        expect(tree.reBalance()).toBe("Tree's already balanced");
+      });
     });
   });
 });
