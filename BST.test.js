@@ -443,7 +443,7 @@ describe("BST class", () => {
         expect(tree.height(11)).toBe(undefined);
       });
     });
-    describe.only("depth(value)", () => {
+    describe("depth(value)", () => {
       test("Should return 0 for the depth when given the root node", () => {
         let tree = new Tree([1, 2, 3]);
         expect(tree.depth(2)).toBe(0);
@@ -464,6 +464,28 @@ describe("BST class", () => {
         let tree = new Tree([1, 2, 3, 4, 5, 6, 7]);
         expect(tree.depth(8)).toBe(undefined);
       });
+    });
+  });
+  describe.only("isBalanced()", () => {
+    test("Should return true for a single node tree", () => {
+      let tree = new Tree([1]);
+      expect(tree.isBalanced()).toBe(true);
+    });
+    test("Should return true for a single node tree", () => {
+      let tree = new Tree([1, 2]);
+      expect(tree.isBalanced()).toBe(true);
+    });
+    test("Should false for an unbalanced tree", () => {
+      let tree = new Tree([1, 2, 3]);
+      tree.insert(11);
+      tree.insert(12);
+      expect(tree.isBalanced()).toBe(false);
+    });
+    test("Should false for an unbalanced tree", () => {
+      let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+      tree.delete(10);
+      tree.delete(8);
+      expect(tree.isBalanced()).toBe(false);
     });
   });
 });

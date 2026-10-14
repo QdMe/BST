@@ -12,6 +12,13 @@ class Node {
     this.right = root;
   }
 }
+class unbalancedBT {
+  constructor(array) {
+    this.array = removeDuplicates(array.sort((a, b) => a - b));
+    this.root = this.#buildTree(this.array, 0, this.array.length - 1); // passing default values for starting and ending indices
+  }
+  #buildTree(array) {}
+}
 class Tree {
   constructor(array) {
     this.array = removeDuplicates(array.sort((a, b) => a - b));
@@ -182,7 +189,8 @@ class Tree {
   }
   #height(root, steps = 0) {
     //Base case:
-    if (root == null || (root.left == null && root.right == null)) return steps;
+    if (root == null) return -1;
+    if (root.left == null && root.right == null) return steps;
 
     // Recursively find hight of each child
     let leftPath = this.#height(root.left, steps + 1);
@@ -210,6 +218,19 @@ class Tree {
       } else curr = curr.right;
       depth++;
     }
+  }
+  isBalanced(root = this.root) {
+    // Base case:
+    if (root == null || (root.left == null && root.right == null)) return true;
+
+    // Recursively check each node if isBalanced
+    let leftHight = this.#height(root.left) + 1;
+    let rightHight = this.#height(root.right) + 1;
+    // Insure difference is always positive
+    let difference = Math.abs(leftHight - rightHight);
+    if (difference <= 1) {
+      return this.isBalanced(root.left) && this.isBalanced(root.right);
+    } else return false;
   }
 }
 function getInorder(node) {
@@ -242,10 +263,13 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // Quick testing section
-// let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 // let tree = new Tree([1, 2, 3, 4, 5]);
 // let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8]);
-let tree = new Tree([1, 2, 3]);
-console.log(tree.depth(4));
+// let tree = new Tree([1, 2, 3]);
+tree.delete(10);
+tree.delete(8);
+console.log(tree.isBalanced());
+console.log(prettyPrint(tree.root));
 
 export { Node, Tree };
