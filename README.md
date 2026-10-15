@@ -23,4 +23,4 @@ In this project, I will create the JavaScript implementation of a binary search 
 **9. isBalanced():**\
   It checks if the tree is balanced. A binary tree is considered balanced if, for every node in the tree, the height difference between its left and right subtrees is no more than 1, and both the left and right subtrees are also balanced.\
 **10. rebalance():**\
-  It rebalances an unbalanced tree. You’ll want to use a traversal method to provide a new array to the buildTree() function.
+  It rebalances an unbalanced tree.
