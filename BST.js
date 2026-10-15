@@ -273,18 +273,4 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
 };
 
-// Quick testing section
-// let tree = new Tree([]);
-// let tree = new Tree([1, 2, 3, 4, 5]);
-// let tree = new Tree([1, 2, 3, 4, 5, 6, 7, 8]);
-let tree = new Tree([1]);
-tree.insert(2);
-tree.insert(3);
-tree.insert(4);
-// tree.insert(5);
-console.log(tree.reBalance());
-console.log(tree);
-
-console.log(prettyPrint(tree.root));
-
-export { Node, Tree };
+export { Node, Tree, prettyPrint };
